@@ -2,10 +2,18 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.api import db
+from src.api.routers.quizzes import router as quizzes_router
+from src.api.routers.questions import router as questions_router
+from src.api.routers.attempts import router as attempts_router
+from src.api.routers.leaderboard import router as leaderboard_router
 
 openapi_tags = [
     {"name": "Health", "description": "Health and service status endpoints."},
     {"name": "Database", "description": "Database lifecycle and information (internal)."},
+    {"name": "Quizzes", "description": "Quiz discovery and metadata"},
+    {"name": "Questions", "description": "Quiz questions retrieval"},
+    {"name": "Attempts", "description": "Quiz attempt lifecycle and answering"},
+    {"name": "Leaderboard", "description": "Top results and rankings"},
 ]
 
 app = FastAPI(
@@ -57,3 +65,10 @@ def health_check():
         JSON object with a 'message' key indicating health.
     """
     return {"message": "Healthy"}
+
+
+# Include routers
+app.include_router(quizzes_router)
+app.include_router(questions_router)
+app.include_router(attempts_router)
+app.include_router(leaderboard_router)

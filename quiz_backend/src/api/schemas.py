@@ -24,6 +24,15 @@ class QuestionsResponse(BaseModel):
 
 
 # PUBLIC_INTERFACE
+class QuizSchema(BaseModel):
+    """Quiz metadata."""
+    id: int = Field(..., description="Quiz identifier")
+    title: str = Field(..., description="Quiz title")
+    description: Optional[str] = Field(None, description="Quiz description")
+    total_questions: Optional[int] = Field(None, description="Number of questions in quiz")
+
+
+# PUBLIC_INTERFACE
 class SubmitAnswerRequest(BaseModel):
     """Payload for submitting an answer during a quiz."""
     question_id: int = Field(..., description="Question identifier")
